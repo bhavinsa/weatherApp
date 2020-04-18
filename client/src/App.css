@@ -13,12 +13,14 @@ padding: .50rem 1.00rem !important;
 }
 
 .main{
-    /* border: 1px solid gray; */
-    /* padding: 1rem; */
     margin-top: 1%;
     margin: auto;
 }
 
 .cardList{
     width: 18rem;
+}
+
+.weatherList{
+    margin-left: 3% !important;
 }

@@ -14,6 +14,8 @@ export const Weather = () => {
     const getWeatherData = useCallback(() => {
         axios.post(API_URL, { "cityIds": cityIds }).then(res => {
             setWeatherData(res);
+        }).catch(err => {
+            alert('Please try after sometime, We are facing some issue');
         });
     }, [setWeatherData, cityIds])
 
@@ -27,6 +29,7 @@ export const Weather = () => {
 
     const getData = (cityId?: string) => {
         const data = weatherData ? weatherData.data.list : [];
+        if(data){
         const cityData = data.find((item: { id: string; }) => Number(item.id) === Number(cityId));
         console.log(cityData);
         if (cityData) {
@@ -43,6 +46,7 @@ export const Weather = () => {
                 description: cityData['weather'][0].description
             }));
         }
+    }
     }
 
     return (

@@ -3,7 +3,7 @@ import { Card, Button } from 'react-bootstrap'
 
 const WeatherList = (props: any) => {
     return (
-        <div className="row">
+        <div className="row weatherList">
             {props.cityList.map((item: any) => {
                 return <div key={item.id} className="col-md-4 col-sm-12 list">
                     <Card className="cardList shadow-sm p-2 mb-2 bg-white rounded">
