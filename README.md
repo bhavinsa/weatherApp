@@ -35,6 +35,9 @@ $ yarn install or npm install
 
 For starting environments...
 
+- Kindly copy the .env.example to .env.development
+- Add the OPEN_WEATHERMAP_API_KEY value
+
 ```sh
 $ npm run start
 ```
