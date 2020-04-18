@@ -31,7 +31,6 @@ export const Weather = () => {
         const data = weatherData ? weatherData.data.list : [];
         if(data){
         const cityData = data.find((item: { id: string; }) => Number(item.id) === Number(cityId));
-        console.log(cityData);
         if (cityData) {
             setCity(prevState => ({
                 ...prevState,
