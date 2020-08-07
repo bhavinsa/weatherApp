@@ -21,7 +21,7 @@ export const Weather = () => {
 
 
     useEffect(() => {
-        getWeatherData();
+        // getWeatherData();
         return function () {
         };
     }, []);
