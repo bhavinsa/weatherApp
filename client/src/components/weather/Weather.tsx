@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment, useCallback } from 'react'
 import axios, { AxiosResponse } from 'axios';
-import { cityNames, API_URL } from '../constant/constant';
+import { cityNames, API_URL } from '../../constant/constant';
 import WeatherList from './WeatherList';
 import WeatherDetails from './WeatherDetails';
 

@@ -50,3 +50,7 @@ Open [Weather app in browser](http://localhost:3000/)
  - More rich and enhance UI
  - Add State management 
  - For real time socket implementation 
+
+
+
+- https://medium.com/wesionary-team/react-firebase-authentication-with-context-api-a770975f33cf

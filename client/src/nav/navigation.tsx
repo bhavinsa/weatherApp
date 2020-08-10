@@ -1,20 +1,22 @@
 import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Weather from "../components/Weather";
-import Add from "../components/add";
 import { Navbar, Nav, Form, FormControl, Button, NavDropdown } from "react-bootstrap";
+import Create from "../components/crud/create";
+import List from "../components/crud/list";
+import Weather from "../components/weather/Weather";
+import Login from "../components/login/login";
 
 const Navigation = () => {
     return (
         <>
-
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Navbar.Brand>React</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto menu-items">
                         <Nav.Link as={Link} to="/">Home</Nav.Link>
-                        <Nav.Link as={Link} to="/add" >Add</Nav.Link>
+                        <Nav.Link as={Link} to="/create" >Create</Nav.Link>
+                        <Nav.Link as={Link} to="/list" >List</Nav.Link>
                         {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -31,11 +33,8 @@ const Navigation = () => {
                     </Nav> */}
                 </Navbar.Collapse>
             </Navbar>
-
-
-            <Route path="/" exact component={Weather} />
-            <Route path="/add" component={Add} />
-
+            <Route path="/create" component={Create} />
+            <Route path="/list" component={List} />
         </>
     )
 }
