@@ -1,12 +1,20 @@
-import React, { Fragment } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React, { Fragment, useContext } from "react";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import { Navbar, Nav, Form, FormControl, Button, NavDropdown } from "react-bootstrap";
 import Create from "../components/crud/create";
 import List from "../components/crud/list";
-import Weather from "../components/weather/Weather";
-import Login from "../components/login/login";
+import { AuthContext } from "../reducers/AuthProvider";
+import { useHistory } from 'react-router-dom';
 
 const Navigation = () => {
+    const authContext = useContext(AuthContext);
+    const history = useHistory();
+    
+    const logout = () => {
+        authContext.authenticated = false;
+        history.push("/login");
+    }
+
     return (
         <>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -25,18 +33,39 @@ const Navigation = () => {
                             <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                         </NavDropdown> */}
                     </Nav>
-                    {/* <Nav>
-                        <Nav.Link href="#deets">More deets</Nav.Link>
-                        <Nav.Link eventKey={2} href="#memes">
-                            Dank memes
+                    <Nav>
+                        {/* <Nav.Link href="#deets">More deets</Nav.Link> */}
+                        <Nav.Link onClick={logout}>
+                            Logout
                         </Nav.Link>
-                    </Nav> */}
+                    </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <Route path="/create" component={Create} />
-            <Route path="/list" component={List} />
+            <ProtectedRoute path="/create" component={Create} />
+            <ProtectedRoute path="/list" component={List} />
+
         </>
     )
 }
+
+const ProtectedRoute = ({ component: Comp, path, ...rest }) => {
+    const { authenticated } = useContext(AuthContext);
+    return (
+        <Route
+            path={path}
+            {...rest}
+            render={(props) => {
+                return authenticated ? (
+                    <Comp {...props} />
+                ) : (
+                        <Redirect
+                            to='/login'
+                        />
+                    );
+            }}
+        />
+    );
+};
+
 
 export default Navigation;
