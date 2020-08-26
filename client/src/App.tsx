@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './App.css';
 // import Weather from './components/Weather';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,26 +11,28 @@ import List from './components/crud/list';
 import { AuthProvider } from './reducers/AuthProvider';
 function App() {
   return (
-    <div>
-      <AuthProvider>
-        <AppProvider>
-          <Router>
-            <Switch>
-              <Route exact path="/(login)" component={LoginContainer} />
-              <Route component={Navigation} />
-            </Switch>
-          </Router>
-        </AppProvider>
-      </AuthProvider>
+    <div className="container-fluid h-100">
+      <div className="row">
+        <AuthProvider>
+          <AppProvider>
+            <Router>
+              <Switch>
+                <Route exact path="/(login)" component={LoginContainer} />
+                <Route component={Navigation} />
+              </Switch>
+            </Router>
+          </AppProvider>
+        </AuthProvider>
+      </div>
     </div>
   );
 }
 
 const LoginContainer = () => (
-  <div className="container">
+  <Fragment>
     <Route exact path="/" render={() => <Redirect to="/login" />} />
     <Route path="/login" component={Login} />
-  </div>
+  </Fragment>
 )
 
 export default App;

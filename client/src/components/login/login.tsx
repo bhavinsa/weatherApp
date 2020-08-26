@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import React, { useContext, useState } from 'react';
+import { Form, Button, Col, Row, Toast } from 'react-bootstrap';
 import { AppContext } from '../../reducers/context';
 import { AuthContext } from '../../reducers/AuthProvider';
 import { useHistory } from 'react-router-dom';
@@ -8,6 +8,10 @@ import { useHistory } from 'react-router-dom';
 const Login = () => {
     const authContext = useContext(AuthContext);
     const history = useHistory();
+
+    const [show, setShow] = useState(false);
+    const [message, setMessage] = useState('');
+
 
     const [user, setUser] = React.useState({
         email: "admin@example.com",
@@ -22,40 +26,53 @@ const Login = () => {
     }
 
     const login = () => {
-        if (user.email === 'admin@example.com' && user.password === 'admin') {
-            authContext.authenticated = true;
-            history.push("/create");
-        } else {
-            authContext.authenticated = false;
-        }
+        if (user.email && user.password) {
 
-        console.log(authContext.authenticated);
+            if (user.email === 'admin@example.com' && user.password === 'admin') {
+                authContext.authenticated = true;
+                history.push(`/home/success`);
+            } else {
+                authContext.authenticated = false;
+            }
+            console.log(authContext.authenticated);
+        } else {
+            setShow(true);
+            setMessage('Please provide valid details.');
+        }
     }
     return (
-        <Form>
-            <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email"
-                    value={user.email}
-                    onChange={(e: any) => {
-                        handleForm("email", e.target.value);
-                    }} />
+        <Form className="login">
 
+            {(show == true) ? <Col xs={9} className="div-toast">
+                <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
+                    <Toast.Body> {message}</Toast.Body>
+                </Toast>
+            </Col> : ''}
+
+            <Form.Group as={Row} controlId="formBasicEmail">
+                <Form.Label column sm="3">Email address</Form.Label>
+                <Col lg="9">
+                    <Form.Control type="email" placeholder="Enter email"
+                        value={user.email}
+                        onChange={(e: any) => {
+                            handleForm("email", e.target.value);
+                        }} />
+                </Col>
             </Form.Group>
 
-            <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password"
-                    value={user.password}
-                    onChange={(e: any) => {
-                        handleForm("password", e.target.value);
-                    }} />
+            <Form.Group as={Row} controlId="formBasicPassword">
+                <Form.Label column sm="3">Password</Form.Label>
+                <Col lg="9">
+                    <Form.Control type="password" placeholder="Password"
+                        value={user.password}
+                        onChange={(e: any) => {
+                            handleForm("password", e.target.value);
+                        }} />
+                </Col>
             </Form.Group>
-            <Form.Group controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
-            </Form.Group>
+
             <Button variant="primary" onClick={login}>
-                Submit
+                Login
             </Button>
         </Form>
     );

@@ -1,16 +1,30 @@
-import React, { useState } from 'react'
-import { Form, Button, Row, Col, Container, Toast } from 'react-bootstrap';
-import { Types } from '../../reducers/crudReducer';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
+import queryString from 'query-string';
+import {
+    BrowserRouter as Router,
+    useParams
+} from 'react-router-dom'
 import { AppContext } from '../../reducers/context';
-import Navigation from '../../nav/navigation';
+import { Container, Form, Row, Col, Button, Toast } from 'react-bootstrap';
+import { create } from 'domain';
+import { Types } from '../../reducers/crudReducer';
+import { useHistory } from 'react-router-dom';
 
-const Create = () => {
+const Update: React.FC = () => {
+    const history = useHistory();
+    let { id } = useParams()
     const { state, dispatch } = React.useContext(AppContext);
+    const updateRecord = state.products.filter((data) => data.id == id);
+
     const [show, setShow] = useState(false);
     const [message, setMessage] = useState('');
+
+
+    console.log(updateRecord[0]);
     const [form, setForm] = React.useState({
-        name: "",
-        description: ""
+        name: updateRecord && updateRecord[0].name ? updateRecord[0].name : '',
+        description: updateRecord && updateRecord[0].description ? updateRecord[0].description : ''
     });
 
     const handleForm = (type: string, value: string) => {
@@ -20,31 +34,26 @@ const Create = () => {
         }));
     }
 
-    const create = () => {
+    const update = () => {
+
         if (form.name && form.description) {
             dispatch({
-                type: Types.Create,
+                type: Types.Update,
                 payload: {
-                    id: Math.round(Math.random() * 10000),
+                    id: id,
                     name: form.name,
                     description: form.description
                 }
             });
-
-            setForm(() => ({
-                name: "",
-                description: ""
-            }));
-            
             setShow(true);
-            setMessage('Created successfully.');
-
+            setMessage('Updated successfully.');
         } else {
             setShow(true);
             setMessage('Please provide valid details.');
-            
         }
+
     }
+
     return (
         <Container>
 
@@ -60,7 +69,7 @@ const Create = () => {
                 <Form.Group as={Row} controlId="formPlaintextPassword">
                     <Form.Label column sm="2">
                         Name
-                </Form.Label>
+            </Form.Label>
                     <Col lg="8">
                         <Form.Control type="text" value={form.name}
                             onChange={(e: any) => {
@@ -73,7 +82,7 @@ const Create = () => {
                 <Form.Group as={Row} controlId="formPlaintextPassword">
                     <Form.Label column sm="2">
                         Description
-                </Form.Label>
+            </Form.Label>
                     <Col lg="8">
                         <Form.Control type="text" value={form.description}
                             onChange={(e: any) => {
@@ -84,12 +93,12 @@ const Create = () => {
                 </Form.Group>
 
 
-                <Button variant="primary" onClick={create}>
-                    Create
-                </Button>
+                <Button variant="primary" onClick={update}>
+                    Update
+            </Button>
             </Form>
         </Container>
     )
 }
 
-export default Create;
+export default Update;

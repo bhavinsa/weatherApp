@@ -2,11 +2,13 @@ import React from 'react';
 import { Container, Table, Button } from 'react-bootstrap';
 import { AppContext } from '../../reducers/context';
 import { Types } from '../../reducers/crudReducer';
+import { Link } from 'react-router-dom';
+import update from './update';
 
 const List = () => {
     const { state, dispatch } = React.useContext(AppContext);
 
-     const deleteProduct = (id: number) => {
+    const deleteProduct = (id: number) => {
         dispatch({
             type: Types.Delete,
             id,
@@ -30,11 +32,14 @@ const List = () => {
                             <td>{c.id}</td>
                             <td>{c.name}</td>
                             <td>{c.description}</td>
-                            <td><Button variant="link" onClick={() => deleteProduct(c.id)} >Delete</Button></td>
+                            <td>
+                                <Link to={`/update/${c.id}`} >Update</Link>
+                                <Button variant="link" onClick={() => deleteProduct(c.id)} >Delete</Button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
-            </Table> : <p> No Data</p> }
+            </Table> : <p> No Data</p>}
         </Container>
 
     )

@@ -1,11 +1,13 @@
 export enum Types {
     Create = "CREATE",
-    Delete = "DELETE"
+    Delete = "DELETE",
+    Update = 'UPDATE'
 }
 
 export type Action =
     | { type: Types.Create, payload: DataType }
-    | { type: Types.Delete, id: number };
+    | { type: Types.Delete, id: number }
+    | { type: Types.Update, payload: DataType };
 
 type DataType = {
     id: number;
@@ -29,6 +31,15 @@ export const productReducer = (
             ];
         case Types.Delete:
             return [...state.filter(data => data.id !== action.id)];
+        case Types.Update:
+            const updateData = state.filter(data => {
+                if (data.id == action.payload.id) {
+                    data.name = action.payload.name
+                    data.description = action.payload.description
+                }
+                return data
+            })
+            return updateData;
         default:
             return state;
     }

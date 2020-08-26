@@ -5,6 +5,8 @@ import Create from "../components/crud/create";
 import List from "../components/crud/list";
 import { AuthContext } from "../reducers/AuthProvider";
 import { useHistory } from 'react-router-dom';
+import Update from "../components/crud/update";
+import Home from "../components/crud/home";
 
 const Navigation = () => {
     const authContext = useContext(AuthContext);
@@ -17,12 +19,12 @@ const Navigation = () => {
 
     return (
         <>
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="w-100">
                 <Navbar.Brand>React</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto menu-items">
-                        <Nav.Link as={Link} to="/">Home</Nav.Link>
+                        <Nav.Link as={Link} to="/home">Home</Nav.Link>
                         <Nav.Link as={Link} to="/create" >Create</Nav.Link>
                         <Nav.Link as={Link} to="/list" >List</Nav.Link>
                         {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
@@ -41,8 +43,10 @@ const Navigation = () => {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
+            <ProtectedRoute path="/home/:status" component={Home} />
             <ProtectedRoute path="/create" component={Create} />
             <ProtectedRoute path="/list" component={List} />
+            <ProtectedRoute path="/update/:id" component={Update} />
 
         </>
     )
